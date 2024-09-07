@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <span>
+      Total clicks: 0
+    </span>
+    <button type="" id="btn">Click me</button>
+    <script>
+    let counter = 0;
+    const button = document.getElementById('btn');
+    const span = document.querySelector('span');
+    button.onclick = () => {
+      counter = counter + 1;
+      span.innerHTML = 'Total clicks: ' + counter;
+      console.log('clicked');
+    };
+    </script>
+  </body>
+</html>
