@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-  </head>
-  <body>
-    <div id="root"/>
-  </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  <div id="root" />
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+<script type="text/babel">
   const root = document.getElementById("root");
-  const Button = ({text, onClick}) => {
+  const Button = ({text, onClick, fontSize = 12}) => {
     console.log(`Text : ${text}`);
     return <button
       onClick={onClick}
       style={{
-      padding: "10px 20px",
-      borderRadius: 10
-    }}>
+        padding: "10px 20px",
+        borderRadius: 10,
+        fontSize: fontSize
+      }}>
       {text}
     </button>;
+  };
+
+  /// 받는 prop type 을 명시적으로 제약함. (type 이 맞지 않다면 console.error 로 출력)
+  Button.propTypes = {
+    text: PropTypes.string.isRequired,
+    fontSize: PropTypes.number
   };
 
   const MemorizedButton = React.memo(Button);
@@ -32,14 +43,12 @@
     const changeValue = () => setValue("Revert Changes");
 
     return <div>
-      <MemorizedButton 
-        text={value} 
-        onClick={changeValue}
-      />
-      <MemorizedButton text="Confirm"/>
+      <MemorizedButton text={value} onClick={changeValue} fontSize={18} />
+      <MemorizedButton text={"Continue"} fontSize={18} />
     </div>;
   };
 
-  ReactDOM.render(<App/>, root);
-  </script>
+  ReactDOM.render(<App />, root);
+</script>
+
 </html>
