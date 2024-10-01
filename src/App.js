@@ -1,51 +1,32 @@
-import Button from "./Button";
-import styles from "./App.module.css";
-import { useEffect, useState } from "react";
-
-function Hello() {
-  useEffect(() => {
-    console.log("created ->");
-    return () => console.log("<- destroyed");
-  }, []);
-
-  return <h1>Hello</h1>;
-}
+import { useState } from "react";
 
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onChangeShowing = () => setShowing(prev => !prev);
+  const [todo, setTodo] = useState("");
+  const onChange = (event) => {
+    setTodo(event.target.value);
+  };
 
-  const [counter, setCounter] = useState(0);
-  const onClick = () => setCounter(prev => prev + 1);
+  const [todos, setTodos] = useState([]);
 
-  const [keyword, setKeyword] = useState("");
-  const onSearch = (event) => setKeyword(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (todo === "") return;
 
-  useEffect(() => {
-    console.log("I run only once");
-  }, []);
-
-  useEffect(() => {
-    if (keyword !== "" && keyword.length > 5) {
-      console.log("SEARCH FOR :", keyword);
-    }
-  }, [keyword]);
+    setTodos(prev => [...prev, todo]);
+    setTodo("");
+  };
 
   return (
     <div>
-      <div>
-        {showing ? <Hello /> : null}
-        <button onClick={onChangeShowing}>{showing ? "Hide" : "Show"}</button>
-      </div>
-
-      <hr />
-
-      <input type="text" placeholder="search here"
-        value={keyword}
-        onChange={onSearch}
-      />
-      <h1 className={styles.title}>{counter}</h1>
-      <Button text={"click me"} onClick={onClick} />
+      <h1>My Todo ({todos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input type="text"
+          value={todo}
+          onChange={onChange}
+          placeholder="Write your todo..."
+        />
+        <button>add todo</button>
+      </form>
     </div>
   );
 }
