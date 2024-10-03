@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     getMovies();
     console.log(movies[0])
-  }, []);
+  });
 
   return (
     <div>
